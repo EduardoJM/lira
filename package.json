@@ -1,0 +1,17 @@
+{
+  "name": "lira",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "private": "true",
+  "author": "Eduardo Oliveira <eduardo_y05@outlook.com>",
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "packages/shared/*"
+    ]
+  },
+  "devDependencies": {
+    "typescript": "^4.0.5"
+  }
+}
