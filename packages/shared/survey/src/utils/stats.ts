@@ -1,3 +1,9 @@
+/*
+ * Cephes Math Library Release 2.1:  January, 1989
+ * Copyright 1984, 1987, 1989 by Stephen L. Moshier
+ * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
+ */
+
 function polevl(x: number, coef: number[], N: number): number {
     let ind = 0;
     let ans = coef[ind++];
@@ -96,6 +102,11 @@ const Q2: number[] = [
     6.79019408009981274425E-9,
 ];
 
+/**
+ * Returns the argument, x, for which the area under the 
+ * Gaussian probability density function (integrated from
+ * minus infinity to x) is equal to y.
+ */
 function ndtri(y0: number) {
     if (y0 === 0.0) {
         return -Infinity;
@@ -135,6 +146,16 @@ function ndtri(y0: number) {
     return x;
 }
 
+/*
+ * Scipy (scipy/stats)
+ */
+
+/**
+ * Percent point function at q of the normal distribution.
+ * @param loc location parameter.
+ * @param scale scale parameter.
+ * @param q lower tail probability.
+ */
 export function ppf(loc: number, scale: number, q: number): number {
     return ndtri(q) * scale + loc;
 }
