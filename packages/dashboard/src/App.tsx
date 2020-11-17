@@ -1,7 +1,10 @@
-import React from 'react'
+import React from 'react';
+import CreateSurvey from './pages/Survey/CreateSurvey';
 
 const App: React.FC = () => {
-    return <h1>Hello World</h1>;
+    return (
+        <CreateSurvey />
+    );
 };
 
 export default App

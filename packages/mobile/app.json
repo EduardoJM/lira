@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Lira Mobile App",
-    "slug": "Lira Mobile App",
+    "slug": "lira-mobile-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
