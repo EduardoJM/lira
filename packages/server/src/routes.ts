@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { Sample, ProportionConservator } from '@lira/survey';
+import { ProportionConservator } from '@lira/survey';
 
 const routes = express.Router();
 

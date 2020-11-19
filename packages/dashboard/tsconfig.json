@@ -2,9 +2,10 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "lib": ["esnext", "dom"],   
-        "allowJs": false,          
-        "checkJs": false,         
-        "jsx": "react"
+        "allowJs": false,
+        "checkJs": false,
+        "jsx": "react",
+        "resolveJsonModule": true
     },
     "include": [
         "./src/**/*"
