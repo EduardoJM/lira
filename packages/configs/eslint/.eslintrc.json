@@ -34,8 +34,7 @@
         "import/no-unresolved": "off",
 
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"] }],
-
-        // disable prop-types
+        "react/jsx-props-no-spreading": "off",
         "react/prop-types": "off"
     }
 }

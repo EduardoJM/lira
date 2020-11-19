@@ -1,4 +1,9 @@
-import React, { useState, useRef, useEffect, ChangeEvent } from 'react';
+import React, {
+    useState,
+    useRef,
+    useEffect,
+    ChangeEvent,
+} from 'react';
 import { Box, FormControlLabel, Switch } from '@material-ui/core';
 import { useField } from '@unform/core';
 
@@ -10,21 +15,24 @@ interface ConditionalFieldProps {
 }
 
 const ConditionalField: React.FC<ConditionalFieldProps> = (props) => {
-    const { name, label, initialValue, field } = props;
+    const {
+        name,
+        label,
+        initialValue,
+        field,
+    } = props;
     const fieldRef = useRef(null);
     const [state, setState] = useState(initialValue);
-    const { fieldName, defaultValue, registerField, error } = useField(name);
+    const { fieldName, registerField } = useField(name);
 
     useEffect(() => {
         registerField({
             name: fieldName,
             ref: fieldRef.current,
-            getValue: (ref: any) => {
-                return state;
-            },
+            getValue: () => state,
             setValue: (ref: any, check: boolean) => {
                 setState(check);
-            }
+            },
         });
     }, [fieldName, registerField, state]);
 
@@ -36,13 +44,13 @@ const ConditionalField: React.FC<ConditionalFieldProps> = (props) => {
         <>
             <Box>
                 <FormControlLabel
-                    control={
+                    control={(
                         <Switch
                             checked={state}
                             onChange={handleChange}
                             name={name}
                         />
-                    }
+                    )}
                     label={label}
                 />
             </Box>
