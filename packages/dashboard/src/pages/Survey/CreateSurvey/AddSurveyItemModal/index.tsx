@@ -1,6 +1,10 @@
-import React, { useState, SyntheticEvent, MouseEvent, useEffect } from 'react';
+import React, {
+    useState,
+    SyntheticEvent,
+    MouseEvent,
+    useEffect,
+} from 'react';
 import {
-    Box,
     Button,
     Dialog,
     DialogTitle,
@@ -10,24 +14,18 @@ import {
     StepContent,
     InputLabel,
     FormControl,
-    FormControlLabel,
-    Switch,
     Select,
-    TextField,
     Snackbar,
     MenuItem,
     AppBar,
     Toolbar,
-    Typography
+    Typography,
 } from '@material-ui/core';
-import { Scope, SubmitHandler } from '@unform/core';
-import * as Yup from 'yup';
+import { SubmitHandler } from '@unform/core';
+import { Form } from '@unform/web';
 
 import useStyles from './material';
 import { dataTypes, DataType } from '../survey';
-
-
-import { Form } from '@unform/web';
 
 interface AddSurveyItemModalProps {
     opened: boolean;
@@ -36,12 +34,12 @@ interface AddSurveyItemModalProps {
 
 interface FormData {
     field: any;
-};
+}
 
 const AddSurveyItemModal: React.FC<AddSurveyItemModalProps> = (props) => {
     const {
         opened,
-        close
+        close,
     } = props;
     const [activeStep, setActiveStep] = useState(0);
     const [currentDataType, setCurrentDataType] = useState('');
@@ -63,7 +61,7 @@ const AddSurveyItemModal: React.FC<AddSurveyItemModalProps> = (props) => {
     const steps = [
         'Selecione o tipo de dado',
         'Configurações',
-        'Concluir'
+        'Concluir',
     ];
 
     function handleChangeDataType(event: React.ChangeEvent<{ value: unknown }>) {
@@ -106,15 +104,16 @@ const AddSurveyItemModal: React.FC<AddSurveyItemModalProps> = (props) => {
         }
         const schema = currentDataTypeObject.getSchema();
         schema.validate(data, {
-            abortEarly: false
+            abortEarly: false,
         }).then((validated) => {
+            console.log(validated);
             setActiveStep(2);
-        }).catch((error) => {
+        }).catch(() => {
             setMessage('Ops! Preencha os campos corretamente!');
         });
-    }
+    };
 
-    function renderStepperControls () {
+    function renderStepperControls() {
         return (
             <div>
                 <div>
@@ -151,7 +150,9 @@ const AddSurveyItemModal: React.FC<AddSurveyItemModalProps> = (props) => {
         if (index === 0) {
             return (
                 <>
-                    <Typography>Aqui você deve selecionar o tipo do dado que o campo irá coletar.</Typography>
+                    <Typography>
+                        Aqui você deve selecionar o tipo do dado que o campo irá coletar.
+                    </Typography>
                     <FormControl className={classes.formControl}>
                         <InputLabel
                             id="demo-simple-select-label"
@@ -173,23 +174,30 @@ const AddSurveyItemModal: React.FC<AddSurveyItemModalProps> = (props) => {
                     </FormControl>
                 </>
             );
-        } else if (index === 1) {
+        }
+        if (index === 1) {
             if (!currentDataTypeObject) {
-                return;
+                return null;
             }
             return (
                 <>
-                    <Typography>Aqui você deve preencher as configurações do seu tipo de dado.</Typography>
+                    <Typography>
+                        Aqui você deve preencher as configurações do seu tipo de dado.
+                    </Typography>
                     <Form onSubmit={handleSubmit}>
                         {currentDataTypeObject.configurationPage()}
                         {renderStepperControls()}
                     </Form>
                 </>
             );
-        } else if (index === 2) {
+        }
+        if (index === 2) {
             return (
                 <>
-                    <Typography>Aqui você deve preencher informações sobre a pergunta a ser realizada durante a pesquisa.</Typography>
+                    <Typography>
+                        Aqui você deve preencher informações sobre a pergunta a ser
+                        realizada durante a pesquisa.
+                    </Typography>
                 </>
             );
         }
@@ -209,7 +217,10 @@ const AddSurveyItemModal: React.FC<AddSurveyItemModalProps> = (props) => {
                         </Button>
                     </Toolbar>
                 </AppBar>
-                <DialogTitle>Preencha corretamente todas as etapas abaixo para adicionar um novo campo para a pesquisa.</DialogTitle>
+                <DialogTitle>
+                    Preencha corretamente todas as etapas
+                    abaixo para adicionar um novo campo para a pesquisa.
+                </DialogTitle>
                 <Stepper activeStep={activeStep} orientation="vertical">
                     {steps.map((label, index) => (
                         <Step key={label}>

@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 20,
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
 
     appBar: {

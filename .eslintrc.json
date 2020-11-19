@@ -1,0 +1,3 @@
+{
+    "extends": "@lira/eslint-config"
+}

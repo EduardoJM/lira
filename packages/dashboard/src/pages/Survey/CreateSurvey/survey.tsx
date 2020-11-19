@@ -1,12 +1,13 @@
 import React from 'react';
-import { ConditionalField, IntegerField } from '../../../components/Forms'
 import * as yup from 'yup';
 
 import {
     SurveyInteger,
     SurveyOptions,
-    SurveyItemDataType
+    SurveyItemDataType,
 } from '@lira/survey';
+
+import { ConditionalField, IntegerField } from '../../../components/Forms';
 
 export interface DataType {
     id: string;
@@ -20,10 +21,10 @@ export const dataTypes = [
     {
         id: 'int',
         text: 'Número Inteiro',
-        create: function(): SurveyInteger  {
+        create(): SurveyInteger {
             return new SurveyInteger();
         },
-        configurationPage: function(): React.ReactNode {
+        configurationPage(): React.ReactNode {
             return (
                 <>
                     <ConditionalField
@@ -45,41 +46,41 @@ export const dataTypes = [
                 </>
             );
         },
-        getSchema: function() {
+        getSchema() {
             return yup.object({
                 hasMinimun: yup.boolean().required(),
                 minimun: yup.number().when('hasMinimun', {
                     is: true,
                     then: yup.number().required(),
-                    otherwise: (schema: any) => schema
+                    otherwise: (schema: any) => schema,
                 }),
                 hasMaximun: yup.boolean().required(),
                 maximun: yup.mixed().when('hasMaximun', {
                     is: true,
                     then: yup.number().required(),
-                    otherwise: (schema: any) => schema
+                    otherwise: (schema: any) => schema,
                 }),
             });
-        }
+        },
     },
     {
         id: 'options',
         text: 'Opções',
-        create: function(): SurveyOptions {
+        create(): SurveyOptions {
             return new SurveyOptions([
                 {
                     id: '',
-                    text: 'Selecionar...'
-                }
-            ])
+                    text: 'Selecionar...',
+                },
+            ]);
         },
-        configurationPage: function(): React.ReactNode {
+        configurationPage(): React.ReactNode {
             return (
                 <p>Oie</p>
             );
         },
-        getSchema: function() {
+        getSchema() {
             return yup.object({});
-        }
-    }
+        },
+    },
 ];

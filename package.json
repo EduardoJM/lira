@@ -8,7 +8,8 @@
   "workspaces": {
     "packages": [
       "packages/*",
-      "packages/shared/*"
+      "packages/shared/*",
+      "packages/configs/*"
     ]
   },
   "devDependencies": {
@@ -16,7 +17,8 @@
     "@commitlint/config-conventional": "^11.0.0",
     "cz-conventional-changelog": "^3.3.0",
     "husky": "^4.3.0",
-    "typescript": "^4.0.5"
+    "typescript": "^4.0.5",
+    "@lira/eslint-config": "*"
   },
   "husky": {
     "hooks": {
