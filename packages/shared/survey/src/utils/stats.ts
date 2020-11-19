@@ -5,23 +5,23 @@
  */
 
 function polevl(x: number, coef: number[], N: number): number {
-    let ind = 0;
-    let ans = coef[ind++];
-    let i = N;
-    do {
-	    ans = ans * x + coef[ind++];
-    } while ((--i) !== 0);
+    let ans = coef[0];
+    let coefIndex = 1;
+    for (let i = N; i !== 0; i -= 1) {
+        ans = ans * x + coef[coefIndex];
+        coefIndex += 1;
+    }
     return ans;
 }
 
-function p1evl(x: number, coef: number[], N: number) : number  {
-    let ind = 0;
-    let ans = x + coef[ind++];
-    let i = N - 1;
-    do {
-	    ans = ans * x + coef[ind++];
-    } while ((--i) !== 0);
-    return (ans);
+function p1evl(x: number, coef: number[], N: number) : number {
+    let ans = x + coef[0];
+    let coefIndex = 1;
+    for (let i = N - 1; i !== 0; i -= 1) {
+        ans = ans * x + coef[coefIndex];
+        coefIndex += 1;
+    }
+    return ans;
 }
 
 const s2pi = 2.50662827463100050242E0;
@@ -103,7 +103,12 @@ const Q2: number[] = [
 ];
 
 /**
- * Returns the argument, x, for which the area under the 
+ * exp(-2) = 0.135...
+ */
+const EXP_MINUS_TWO = 0.13533528323661269189;
+
+/**
+ * Returns the argument, x, for which the area under the
  * Gaussian probability density function (integrated from
  * minus infinity to x) is equal to y.
  */
@@ -119,25 +124,26 @@ function ndtri(y0: number) {
     }
     let code = 1;
     let y = y0;
-    if (y > (1.0 - 0.13533528323661269189)) {	/* 0.135... = exp(-2) */
-	    y = 1.0 - y;
-	    code = 0;
+    if (y > (1.0 - EXP_MINUS_TWO)) {
+        y = 1.0 - y;
+        code = 0;
     }
-    if (y > 0.13533528323661269189) {
-        y = y - 0.5;
-        let y2 = y * y;
-        let x = y + y * (y2 * polevl(y2, P0, 4) / p1evl(y2, Q0, 8));
-        x = x * s2pi;
+    if (y > EXP_MINUS_TWO) {
+        y -= 0.5;
+        const y2 = y * y;
+        let x = y + y * ((y2 * polevl(y2, P0, 4)) / p1evl(y2, Q0, 8));
+        x *= s2pi;
         return x;
-    }    
+    }
     let x = Math.sqrt(-2.0 * Math.log(y));
     const x0 = x - Math.log(x) / x;
     const z = 1.0 / x;
     let x1 = 0;
-    if (x < 8.0) {		/* y > exp(-32) = 1.2664165549e-14 */
-	    x1 = z * polevl(z, P1, 8) / p1evl(z, Q1, 8);
+    if (x < 8.0) {
+        /* y > exp(-32) = 1.2664165549e-14 */
+        x1 = (z * polevl(z, P1, 8)) / p1evl(z, Q1, 8);
     } else {
-        x1 = z * polevl(z, P2, 8) / p1evl(z, Q2, 8);
+        x1 = (z * polevl(z, P2, 8)) / p1evl(z, Q2, 8);
     }
     x = x0 - x1;
     if (code !== 0) {
@@ -156,6 +162,6 @@ function ndtri(y0: number) {
  * @param scale scale parameter.
  * @param q lower tail probability.
  */
-export function ppf(loc: number, scale: number, q: number): number {
+export default function ppf(loc: number, scale: number, q: number): number {
     return ndtri(q) * scale + loc;
 }

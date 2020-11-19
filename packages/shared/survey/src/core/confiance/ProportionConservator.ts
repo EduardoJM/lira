@@ -1,6 +1,6 @@
 import Sample from '../Sample';
 import ConfianceInterval from './ConfianceInterval';
-import { ppf } from '../../utils/stats';
+import ppf from '../../utils/stats';
 
 class ProportionConservator extends ConfianceInterval {
     constructor() {
