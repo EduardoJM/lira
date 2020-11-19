@@ -13,7 +13,7 @@ export interface DataType {
     text: string;
     create: () => SurveyItemDataType<any>;
     configurationPage: () => React.ReactNode;
-    getSchema: () => yup.ObjectSchemaConstructor;
+    getSchema: () => yup.Schema<any>;
 }
 
 export const dataTypes = [
@@ -48,16 +48,16 @@ export const dataTypes = [
         getSchema: function() {
             return yup.object({
                 hasMinimun: yup.boolean().required(),
-                minimun: yup.mixed().when('hasMinimun', {
+                minimun: yup.number().when('hasMinimun', {
                     is: true,
                     then: yup.number().required(),
-                    otherwise: undefined
+                    otherwise: (schema: any) => schema
                 }),
                 hasMaximun: yup.boolean().required(),
                 maximun: yup.mixed().when('hasMaximun', {
                     is: true,
                     then: yup.number().required(),
-                    otherwise: undefined
+                    otherwise: (schema: any) => schema
                 }),
             });
         }

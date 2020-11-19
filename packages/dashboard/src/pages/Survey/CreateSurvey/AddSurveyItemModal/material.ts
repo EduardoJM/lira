@@ -25,6 +25,13 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'space-between'
     },
+
+    appBar: {
+        position: 'relative',
+    },
+    appBarTitle: {
+        flex: 1,
+    },
 }));
 
 export default useStyles;
