@@ -3,17 +3,20 @@ import ConfianceInterval from './ConfianceInterval';
 import ppf from '../../utils/stats';
 
 class ProportionConservator extends ConfianceInterval {
-    constructor() {
+    sample: Sample<any>;
+
+    constructor(sample: Sample<any>) {
         super();
+        this.sample = sample;
     }
 
-    getError<T>(sample: Sample<T>, confiability: number): number {
+    getError(confiability: number): number {
         if (confiability < 0 || confiability > 1) {
             throw new Error('confiability must be a probability between 0 and 1.');
         }
         const prob = (1 - confiability) / 2;
         const z = Math.abs(ppf(0, 1, prob));
-        const error = z / Math.sqrt(4 * sample.getSampleSize());
+        const error = z / Math.sqrt(4 * this.sample.getSampleSize());
         return error;
     }
 
@@ -26,7 +29,7 @@ class ProportionConservator extends ConfianceInterval {
         }
         const prob = (1 - confiability) / 2;
         const z = Math.abs(ppf(0, 1, prob));
-        const n = Math.pow(z / error, 2) / 4;
+        const n = ((z / error) ** 2) / 4;
         return Math.ceil(n);
     }
 }

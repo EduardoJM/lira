@@ -1,12 +1,5 @@
-import Sample from '../Sample';
-
-class ConfianceInterval {
-    constructor() {
-    }
-
-    getError<T>(sample: Sample<T>, confiability?: number): number {
-        return NaN;
-    }
+abstract class ConfianceInterval {
+    abstract getError(confiability?: number): number;
 }
 
 export default ConfianceInterval;

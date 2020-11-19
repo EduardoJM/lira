@@ -1,14 +1,14 @@
 class Sample<T extends Object> {
     private sample: T[];
 
-    constructor () {
+    constructor() {
         this.sample = [];
     }
 
     append(item: T): Sample<T> {
         this.sample = [
             ...this.sample,
-            item
+            item,
         ];
         return this;
     }
@@ -16,7 +16,7 @@ class Sample<T extends Object> {
     appendSample(otherSample: Sample<T>): Sample<T> {
         this.sample = [
             ...this.sample,
-            ...otherSample.sample
+            ...otherSample.sample,
         ];
         return this;
     }

@@ -14,9 +14,8 @@ export class SurveyOptions extends SurveyItemDataType<string> {
     }
 
     validate(data: string): boolean {
-        const filtered = this.items.filter((item) => {
-            return (item.id.toLowerCase() === data.toLowerCase());
-        });
+        const filtered = this.items
+            .filter((item) => item.id.toLowerCase() === data.toLowerCase());
         return (filtered.length === 1);
     }
 }

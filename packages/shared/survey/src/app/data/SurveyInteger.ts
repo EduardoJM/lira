@@ -2,6 +2,7 @@ import SurveyItemDataType from './SurveyItemDataType';
 
 class SurveyInteger extends SurveyItemDataType<number> {
     minimun: number;
+
     maximun: number;
 
     constructor() {
@@ -14,12 +15,12 @@ class SurveyInteger extends SurveyItemDataType<number> {
         if (!(Math.floor(data) === data && Math.ceil(data) === data)) {
             return false;
         }
-        if (isFinite(this.minimun)) {
+        if (Number.isFinite(this.minimun)) {
             if (data < this.minimun) {
                 return false;
             }
         }
-        if (isFinite(this.maximun)) {
+        if (Number.isFinite(this.maximun)) {
             if (data > this.maximun) {
                 return false;
             }
