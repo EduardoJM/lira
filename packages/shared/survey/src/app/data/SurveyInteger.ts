@@ -1,14 +1,21 @@
 import SurveyItemDataType from './SurveyItemDataType';
+import applyPropsTo from '../../utils/props';
 
-class SurveyInteger extends SurveyItemDataType<number> {
+export interface SurveyIntegerCreateOptions {
+    minimun?: number;
+    maximun?: number;
+}
+
+export class SurveyInteger extends SurveyItemDataType<number> {
     minimun: number;
 
     maximun: number;
 
-    constructor() {
+    constructor(opts?: SurveyIntegerCreateOptions) {
         super(0);
         this.minimun = -Infinity;
         this.maximun = Infinity;
+        applyPropsTo(opts, this);
     }
 
     validate(data: number): boolean {
@@ -28,5 +35,3 @@ class SurveyInteger extends SurveyItemDataType<number> {
         return true;
     }
 }
-
-export default SurveyInteger;

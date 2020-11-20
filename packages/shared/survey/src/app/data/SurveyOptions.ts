@@ -1,16 +1,22 @@
 import SurveyItemDataType from './SurveyItemDataType';
+import applyPropsTo from '../../utils/props';
 
 export interface SurveyOptionsData {
     id: string;
     text: string;
 }
 
+export interface SurveyOptionsCreateOptions {
+    items?: SurveyOptionsData[];
+}
+
 export class SurveyOptions extends SurveyItemDataType<string> {
     items: SurveyOptionsData[];
 
-    constructor(options: SurveyOptionsData[]) {
+    constructor(opts?: SurveyOptionsCreateOptions) {
         super('');
-        this.items = options;
+        this.items = [];
+        applyPropsTo(opts, this);
     }
 
     validate(data: string): boolean {
