@@ -8,12 +8,14 @@
   "dependencies": {
     "@lira/survey": "*",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "ip": "^1.1.5",
     "routes": "^2.1.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.8",
+    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.9",
     "@types/ip": "^1.1.0",
     "ts-node-dev": "^1.0.0"
