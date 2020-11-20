@@ -3,6 +3,7 @@ import React, {
     SyntheticEvent,
     MouseEvent,
     useEffect,
+    ChangeEvent,
 } from 'react';
 import {
     Button,
@@ -14,6 +15,7 @@ import {
     StepContent,
     InputLabel,
     FormControl,
+    TextField,
     Select,
     Snackbar,
     MenuItem,
@@ -23,19 +25,29 @@ import {
 } from '@material-ui/core';
 import { SubmitHandler } from '@unform/core';
 import { Form } from '@unform/web';
+import { SurveyItemDataType, SurveyItem } from '@lira/survey';
 
 import useStyles from './material';
 import { dataTypes, DataType } from '../survey';
 
+/**
+ * Add Survey Item modal properties.
+ */
 interface AddSurveyItemModalProps {
+    /**
+     * A boolean value indicating if the modal is opened.
+     */
     opened: boolean;
+    /**
+     * A function called when modal needs to be closed.
+     */
     close: () => void;
 }
 
-interface FormData {
-    field: any;
-}
-
+/**
+ * Add Survey Item Modal.
+ * @param props Modal Properties.
+ */
 const AddSurveyItemModal: React.FC<AddSurveyItemModalProps> = (props) => {
     const {
         opened,
@@ -44,6 +56,8 @@ const AddSurveyItemModal: React.FC<AddSurveyItemModalProps> = (props) => {
     const [activeStep, setActiveStep] = useState(0);
     const [currentDataType, setCurrentDataType] = useState('');
     const [currentDataTypeObject, setCurrentDataTypeObject] = useState<DataType | null>(null);
+    const [storedDataType, setStoredDataType] = useState<SurveyItemDataType<any> | null>(null);
+    const [questionText, setQuestionText] = useState('');
 
     const [message, setMessage] = useState<string | null>(null);
 
@@ -61,6 +75,7 @@ const AddSurveyItemModal: React.FC<AddSurveyItemModalProps> = (props) => {
     const steps = [
         'Selecione o tipo de dado',
         'Configurações',
+        'Descrição',
         'Concluir',
     ];
 
@@ -70,6 +85,15 @@ const AddSurveyItemModal: React.FC<AddSurveyItemModalProps> = (props) => {
 
     function handleNext() {
         if (activeStep === steps.length - 1) {
+            // finish
+            if (!storedDataType || questionText === '') {
+                setMessage('Ops! houve um erro com seus dados!');
+                setActiveStep(0);
+                return;
+            }
+            const item = new SurveyItem(storedDataType, questionText);
+            console.log(item);
+            close();
             return;
         }
         if (activeStep === 0) {
@@ -96,7 +120,7 @@ const AddSurveyItemModal: React.FC<AddSurveyItemModalProps> = (props) => {
         setMessage(null);
     }
 
-    const handleSubmit: SubmitHandler<FormData> = (data) => {
+    const handleSubmit: SubmitHandler<any> = (data) => {
         if (!currentDataTypeObject) {
             setMessage('Selecione o tipo de dado para o campo!');
             setActiveStep(0);
@@ -106,12 +130,18 @@ const AddSurveyItemModal: React.FC<AddSurveyItemModalProps> = (props) => {
         schema.validate(data, {
             abortEarly: false,
         }).then((validated) => {
-            console.log(validated);
+            const dt = currentDataTypeObject.create(validated);
+            setStoredDataType(dt);
             setActiveStep(2);
         }).catch(() => {
             setMessage('Ops! Preencha os campos corretamente!');
+            setStoredDataType(null);
         });
     };
+
+    function handleQuestionTextChange(e: ChangeEvent<HTMLInputElement>) {
+        setQuestionText(e.target.value);
+    }
 
     function renderStepperControls() {
         return (
@@ -198,6 +228,14 @@ const AddSurveyItemModal: React.FC<AddSurveyItemModalProps> = (props) => {
                         Aqui você deve preencher informações sobre a pergunta a ser
                         realizada durante a pesquisa.
                     </Typography>
+                    <TextField
+                        id="item-text"
+                        label="Texto da Pergunta"
+                        multiline
+                        rowsMax={4}
+                        value={questionText}
+                        onChange={handleQuestionTextChange}
+                    />
                 </>
             );
         }

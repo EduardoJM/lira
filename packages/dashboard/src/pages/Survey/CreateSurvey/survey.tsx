@@ -12,7 +12,7 @@ import { ConditionalField, IntegerField } from '../../../components/Forms';
 export interface DataType {
     id: string;
     text: string;
-    create: () => SurveyItemDataType<any>;
+    create: (data: any) => SurveyItemDataType<any>;
     configurationPage: () => React.ReactNode;
     getSchema: () => yup.Schema<any>;
 }
@@ -21,8 +21,8 @@ export const dataTypes = [
     {
         id: 'int',
         text: 'Número Inteiro',
-        create(): SurveyInteger {
-            return new SurveyInteger();
+        create(data: any): SurveyInteger {
+            return new SurveyInteger(data);
         },
         configurationPage(): React.ReactNode {
             return (
@@ -66,13 +66,8 @@ export const dataTypes = [
     {
         id: 'options',
         text: 'Opções',
-        create(): SurveyOptions {
-            return new SurveyOptions([
-                {
-                    id: '',
-                    text: 'Selecionar...',
-                },
-            ]);
+        create(data: any): SurveyOptions {
+            return new SurveyOptions(data);
         },
         configurationPage(): React.ReactNode {
             return (
