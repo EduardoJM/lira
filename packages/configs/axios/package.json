@@ -1,7 +1,7 @@
 {
   "name": "@lira/axios-config",
   "version": "0.0.1",
-  "main": "src/api.js",
+  "main": "src/api.ts",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.0"
