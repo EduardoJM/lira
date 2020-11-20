@@ -7,7 +7,7 @@ export default function applyPropsTo(from: any, toObject: any) {
         if (!Object.prototype.hasOwnProperty.call(from, key)) {
             return;
         }
-        const value = keys[key as any];
+        const value = from[key as any];
         if (value === undefined) {
             return;
         }
