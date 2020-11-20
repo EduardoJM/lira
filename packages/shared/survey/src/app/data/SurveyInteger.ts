@@ -34,4 +34,9 @@ export class SurveyInteger extends SurveyItemDataType<number> {
         }
         return true;
     }
+
+    // eslint-disable-next-line class-methods-use-this
+    toString(): string {
+        return 'Número Inteiro';
+    }
 }

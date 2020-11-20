@@ -29,6 +29,7 @@ import { SurveyItemDataType, SurveyItem } from '@lira/survey';
 
 import useStyles from './material';
 import { dataTypes, DataType } from '../survey';
+import { useSurveyItems } from '../../../../contexts/surveyItems';
 
 /**
  * Add Survey Item modal properties.
@@ -58,6 +59,8 @@ const AddSurveyItemModal: React.FC<AddSurveyItemModalProps> = (props) => {
     const [currentDataTypeObject, setCurrentDataTypeObject] = useState<DataType | null>(null);
     const [storedDataType, setStoredDataType] = useState<SurveyItemDataType<any> | null>(null);
     const [questionText, setQuestionText] = useState('');
+
+    const { items, setItems } = useSurveyItems();
 
     const [message, setMessage] = useState<string | null>(null);
 
@@ -92,7 +95,10 @@ const AddSurveyItemModal: React.FC<AddSurveyItemModalProps> = (props) => {
                 return;
             }
             const item = new SurveyItem(storedDataType, questionText);
-            console.log(item);
+            setItems([
+                ...items,
+                item,
+            ]);
             close();
             return;
         }

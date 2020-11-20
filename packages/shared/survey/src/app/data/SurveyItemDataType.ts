@@ -7,6 +7,11 @@ abstract class SurveyItemDataType<T> {
 
     abstract validate(data: T): boolean;
 
+    // eslint-disable-next-line class-methods-use-this
+    toString(): string {
+        return 'Desconhecido';
+    }
+
     setValue(value: T): boolean {
         if (!this.validate(value)) {
             return false;

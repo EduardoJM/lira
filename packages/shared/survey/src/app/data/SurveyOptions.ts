@@ -24,4 +24,9 @@ export class SurveyOptions extends SurveyItemDataType<string> {
             .filter((item) => item.id.toLowerCase() === data.toLowerCase());
         return (filtered.length === 1);
     }
+
+    // eslint-disable-next-line class-methods-use-this
+    toString(): string {
+        return 'Opções';
+    }
 }

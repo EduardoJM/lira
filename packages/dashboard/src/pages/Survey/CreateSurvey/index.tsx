@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
+import { SurveyItemsProvider } from '../../../contexts/surveyItems';
 import AddSurveyItemModal from './AddSurveyItemModal';
+import SurveyItemsList from './SurveyItemsList';
 
 const CreateSurvey: React.FC = () => {
     const [modalAddOpened, setModalAddOpened] = useState(false);
@@ -18,7 +20,10 @@ const CreateSurvey: React.FC = () => {
             <button type="button" onClick={handleOpenModalAdd}>
                 Open Modal
             </button>
-            <AddSurveyItemModal opened={modalAddOpened} close={handleCloseModalAdd} />
+            <SurveyItemsProvider>
+                <SurveyItemsList />
+                <AddSurveyItemModal opened={modalAddOpened} close={handleCloseModalAdd} />
+            </SurveyItemsProvider>
         </>
     );
 };
