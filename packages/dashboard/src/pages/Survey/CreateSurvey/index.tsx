@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import DashBoard from '../../../layouts/DashBoard';
+
 import { SurveyItemsProvider } from '../../../contexts/surveyItems';
 import AddSurveyItemModal from './AddSurveyItemModal';
 import SurveyItemsList from './SurveyItemsList';
@@ -16,15 +18,20 @@ const CreateSurvey: React.FC = () => {
     }
 
     return (
-        <>
-            <button type="button" onClick={handleOpenModalAdd}>
-                Open Modal
-            </button>
-            <SurveyItemsProvider>
-                <SurveyItemsList />
-                <AddSurveyItemModal opened={modalAddOpened} close={handleCloseModalAdd} />
-            </SurveyItemsProvider>
-        </>
+        <DashBoard
+            title="Criar Pesquisa"
+        >
+            <>
+                oie?
+                <button type="button" onClick={handleOpenModalAdd}>
+                    Open Modal
+                </button>
+                <SurveyItemsProvider>
+                    <SurveyItemsList />
+                    <AddSurveyItemModal opened={modalAddOpened} close={handleCloseModalAdd} />
+                </SurveyItemsProvider>
+            </>
+        </DashBoard>
     );
 };
 
