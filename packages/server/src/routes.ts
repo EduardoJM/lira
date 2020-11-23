@@ -31,4 +31,18 @@ routes.get('/new', (request, response) => {
     });
 });
 
+routes.get('/update', (request, response) => {
+    const User = mongoose.model('User');
+    User.updateOne({ _id: '5fbb1596fbd39625ad32657c' }, {
+        $set: {
+            surveys: [],
+        },
+    }).then((data) => {
+        if (data.nModified === 1) {
+            return response.json({ message: 'updated' });
+        }
+        return response.status(400).json({ message: 'can\'t update' });
+    }).catch(() => response.status(400).json({ message: 'can\'t update' }));
+});
+
 export default routes;
