@@ -25,17 +25,18 @@ export const AuthProvider: React.FC = ({ children }) => {
     const [user, setUser] = useState<object | null>(null);
     const history = useHistory();
 
-    async function signIn(email: string, password: string) {
+    function signIn(email: string, password: string) {
         const signInData = {
             email,
             password,
         };
-        const result = await api.post<LoginResult>('/auth', signInData);
-        setUser(result.data.user);
-        api.defaults.headers.Authorization = `Bearer ${result.data.token}`;
-        localStorage.setItem('@LiraAuth:user', JSON.stringify(result.data.user));
-        localStorage.setItem('@LiraAuth:token', result.data.token);
-        history.push('/');
+        api.post<LoginResult>('/auth', signInData).then((result) => {
+            setUser(result.data.user);
+            api.defaults.headers.Authorization = `Bearer ${result.data.token}`;
+            localStorage.setItem('@LiraAuth:user', JSON.stringify(result.data.user));
+            localStorage.setItem('@LiraAuth:token', result.data.token);
+            history.push('/');
+        });
     }
 
     async function signOut() {

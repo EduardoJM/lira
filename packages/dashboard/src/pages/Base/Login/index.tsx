@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Paper, Typography, Button } from '@material-ui/core';
 import { Form } from '@unform/web';
+import { useHistory } from 'react-router-dom';
 
 import { ShortTextField } from '../../../components/Forms';
+import { useAuth } from '../../../contexts/auth';
 
 import useStyles from './material';
 
 const Login: React.FC = () => {
     const classes = useStyles();
+    const auth = useAuth();
+    const history = useHistory();
+
+    const handleSubmit = (data: { email: string; password: string }) => {
+        auth.signIn(data.email, data.password);
+    };
+
+    useEffect(() => {
+        if (auth.signed) {
+            history.push('/');
+        }
+    }, [auth.signed]);
 
     return (
         <div className={classes.container}>
@@ -15,7 +29,7 @@ const Login: React.FC = () => {
                 <Typography className={classes.boxTitle} variant="h5">Faça Login</Typography>
                 <Form
                     className={classes.boxForm}
-                    onSubmit={(data) => console.log(data)}
+                    onSubmit={handleSubmit}
                 >
                     <ShortTextField
                         name="email"

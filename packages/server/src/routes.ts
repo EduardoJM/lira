@@ -1,18 +1,22 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 import {
     ProportionConservator,
     SurveyInteger,
     SurveyItem,
-    Survey
+    Survey,
 } from '@lira/survey';
+
+import generateToken from './utils/token';
 
 const routes = express.Router();
 
 routes.get('/running', (request, response) => response.json({ running: true }));
 
-routes.get('/new', (request, response) => {
+/*
+routes.get('/new', async (request, response) => {
     const User = mongoose.model('User');
     const c = new Survey();
     c.items.push(new SurveyItem<SurveyInteger>(new SurveyInteger({
@@ -20,6 +24,7 @@ routes.get('/new', (request, response) => {
         maximun: 120,
     }), 'Qual é a sua idade?'));
     User.create({
+        email: 'eduardo_y05@outlook.com',
         completeName: 'Eduardo José de Oliveira',
         displayName: 'Eduardo Oliveira',
         userLevel: 0,
@@ -29,7 +34,9 @@ routes.get('/new', (request, response) => {
     return response.json({
         message: ProportionConservator.getSampleSize(0.95, 0.02),
     });
+   return response.json({ p: await bcrypt.hash('00e11$22334455', 10) })
 });
+*/
 
 routes.get('/update', (request, response) => {
     const User = mongoose.model('User');
@@ -43,6 +50,41 @@ routes.get('/update', (request, response) => {
         }
         return response.status(400).json({ message: 'can\'t update' });
     }).catch(() => response.status(400).json({ message: 'can\'t update' }));
+});
+
+routes.post('/auth', async (request, response) => {
+    const { email, password } = request.body;
+    const User = mongoose.model('User');
+
+    const userData = await User.where('email', email);
+
+    if (!userData || userData.length === 0) {
+        return response.status(400)
+            .json({
+                error: true,
+                information: 'EMAIL_NOT_REGISTERED',
+            });
+    }
+
+    if (!await bcrypt.compare(password, userData[0].password)) {
+        return response.status(400)
+            .json({
+                error: true,
+                information: 'WRONG_PASSWORD',
+            });
+    }
+
+    const token = generateToken({ id: userData.id });
+
+    const serializedUser = {
+        ...userData,
+        password: undefined,
+    };
+
+    return response.json({
+        user: serializedUser,
+        token,
+    });
 });
 
 export default routes;

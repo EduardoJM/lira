@@ -19,6 +19,7 @@ mongoose.connect('mongodb://localhost:27017/lira-db', {
 });
 requireDir('./models');
 
+app.use(express.json());
 app.use(cors());
 app.use(routes);
 
