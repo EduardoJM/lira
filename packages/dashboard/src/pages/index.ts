@@ -1,3 +1,5 @@
-export { default as NoServer } from './NoServer';
+export { default as NoServer } from './Base/NoServer';
+export { default as Loading } from './Base/Loading';
+export { default as Login } from './Base/Login';
+
 export { default as CreateSurvey } from './Survey/CreateSurvey';
-export { default as Loading } from './Loading';

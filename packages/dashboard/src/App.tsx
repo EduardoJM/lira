@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '@lira/axios-config';
 
-import { Loading, CreateSurvey, NoServer } from './pages';
+import { Loading, Login, NoServer } from './pages';
 
 const App: React.FC = () => {
     const [loading, setLoading] = useState(true);
@@ -28,7 +28,7 @@ const App: React.FC = () => {
     }
 
     return (
-        <CreateSurvey />
+        <Login />
     );
 };
 
