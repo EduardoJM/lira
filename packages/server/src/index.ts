@@ -13,7 +13,7 @@ createServerConfigurations();
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/lira-db', {
+mongoose.connect('mongodb://localhost:27018/lira-db', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
