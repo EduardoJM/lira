@@ -10,8 +10,10 @@ import { useHistory } from 'react-router-dom';
 import api from '@lira/axios-config';
 import { texts } from '../data';
 
+type SignedState = 'Loading' | 'Signed' | 'Unsigned';
+
 interface AuthContextData {
-    signed: boolean;
+    signed: SignedState;
     user: object;
     signIn(email: string, password: string): void;
     signOut(): void;
@@ -27,6 +29,7 @@ export const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 export const AuthProvider: React.FC = ({ children }) => {
     const [user, setUser] = useState<object | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const [state, setState] = useState<SignedState>('Loading');
     const history = useHistory();
 
     function signIn(email: string, password: string) {
@@ -76,6 +79,9 @@ export const AuthProvider: React.FC = ({ children }) => {
             api.defaults.headers.Authorization = `Bearer ${storagedToken}`;
 
             setUser(JSON.parse(storagedUser));
+            setState('Signed');
+        } else {
+            setState('Unsigned');
         }
     }, []);
 
@@ -85,7 +91,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{
-            signed: !!user,
+            signed: state,
             user: user || {},
             signIn,
             signOut,

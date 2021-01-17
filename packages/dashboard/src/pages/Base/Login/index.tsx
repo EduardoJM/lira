@@ -18,7 +18,7 @@ const Login: React.FC = () => {
     };
 
     useEffect(() => {
-        if (auth.signed) {
+        if (auth.signed === 'Signed') {
             history.push('/');
         }
     }, [auth.signed]);

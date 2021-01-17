@@ -4,7 +4,7 @@ import api from '@lira/axios-config';
 
 import { AuthProvider, useAuth } from './contexts/auth';
 
-import { Loading, Login, NoServer } from './pages';
+import { Loading, Login, NoServer, CreateSurvey } from './pages';
 
 const App: React.FC = () => {
     const [loading, setLoading] = useState(true);
@@ -32,9 +32,7 @@ const App: React.FC = () => {
 
     const Logout: React.FC = () => {
         const { signOut } = useAuth();
-        useEffect(() => {
-            signOut();
-        }, []);
+        signOut();
         return <></>
     };
 
@@ -46,6 +44,9 @@ const App: React.FC = () => {
                 </Route>
                 <Route path="/sign-out" exact>
                     <Logout />
+                </Route>
+                <Route path="/survey/new" exact>
+                    <CreateSurvey />
                 </Route>
             </AuthProvider>
         </BrowserRouter>
