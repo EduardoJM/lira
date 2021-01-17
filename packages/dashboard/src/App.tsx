@@ -4,7 +4,7 @@ import api from '@lira/axios-config';
 
 import { AuthProvider, useAuth } from './contexts/auth';
 
-import { Loading, Login, NoServer, CreateSurvey } from './pages';
+import { Loading, Login, NoServer, CreateSurvey, Profile } from './pages';
 
 const App: React.FC = () => {
     const [loading, setLoading] = useState(true);
@@ -47,6 +47,9 @@ const App: React.FC = () => {
                 </Route>
                 <Route path="/survey/new" exact>
                     <CreateSurvey />
+                </Route>
+                <Route path="/account/profile" exact>
+                    <Profile />
                 </Route>
             </AuthProvider>
         </BrowserRouter>

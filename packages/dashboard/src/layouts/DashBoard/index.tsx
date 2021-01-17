@@ -22,6 +22,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import { useHistory } from 'react-router-dom';
 
 import { useAuth } from '../../contexts/auth';
 
@@ -39,6 +40,7 @@ const DashBoard: React.FC<DashBoardProps> = (props) => {
     const classes = useStyles();
     const theme = useTheme();
     const { signed, signOut } = useAuth();
+    const history = useHistory();
 
     const [open, setOpen] = useState(true);
 
@@ -59,7 +61,13 @@ const DashBoard: React.FC<DashBoardProps> = (props) => {
     };
     
     const handleLogout = () => {
+        setAnchorEl(null);
         signOut();
+    };
+
+    const handleGoToProfile = () => {
+        setAnchorEl(null);
+        history.push('/account/profile');
     };
 
     return (
@@ -110,7 +118,7 @@ const DashBoard: React.FC<DashBoardProps> = (props) => {
                                 open={anchorEl !== null}
                                 onClose={handleCloseProfileMenu}
                             >
-                                <MenuItem>Perfil</MenuItem>
+                                <MenuItem onClick={handleGoToProfile}>Perfil</MenuItem>
                                 <MenuItem onClick={handleLogout}>Sair</MenuItem>
                             </Menu>
                         </div>
