@@ -1,8 +1,8 @@
-import { makeStyles, Theme, createStyles } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core';
 
 export const drawerWidth = 260;
 
-export const useStyles = makeStyles((theme: Theme) => createStyles({
+export const useStyles = makeStyles((theme: Theme) => ({
     root: {
         display: 'flex',
     },
@@ -19,6 +19,9 @@ export const useStyles = makeStyles((theme: Theme) => createStyles({
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.enteringScreen,
         }),
+    },
+    appBarTitle: {
+        flex: 1,
     },
     menuButton: {
         marginRight: theme.spacing(2),
