@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "start": "tsnd --transpile-only --ignore-watch node_modules --respawn src/index.ts"
+    "start": "tsnd --transpile-only --ignore-watch node_modules --respawn src/index.ts",
+    "seed": "node ./seed.js"
   },
   "dependencies": {
     "@lira/survey": "*",
@@ -16,6 +17,7 @@
     "ip": "^1.1.5",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.15",
+    "mongoose-seed": "^0.6.0",
     "require-dir": "^1.2.0",
     "routes": "^2.1.0"
   },

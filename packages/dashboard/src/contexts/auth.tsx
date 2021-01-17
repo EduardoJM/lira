@@ -62,11 +62,11 @@ export const AuthProvider: React.FC = ({ children }) => {
         });
     }
 
-    async function signOut() {
+    function signOut() {
         setUser(null);
         localStorage.clear();
         api.defaults.headers.Authorization = undefined;
-        history.push('/in');
+        history.push('/sign-in');
     }
 
     useEffect(() => {

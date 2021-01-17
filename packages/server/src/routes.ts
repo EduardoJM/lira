@@ -15,9 +15,8 @@ const routes = express.Router();
 
 routes.get('/running', (request, response) => response.json({ running: true }));
 
-/*
 routes.get('/new', async (request, response) => {
-    const User = mongoose.model('User');
+    /*const User = mongoose.model('User');
     const c = new Survey();
     c.items.push(new SurveyItem<SurveyInteger>(new SurveyInteger({
         minimun: 16,
@@ -33,10 +32,9 @@ routes.get('/new', async (request, response) => {
     });
     return response.json({
         message: ProportionConservator.getSampleSize(0.95, 0.02),
-    });
+    });*/
    return response.json({ p: await bcrypt.hash('00e11$22334455', 10) })
 });
-*/
 
 routes.get('/update', (request, response) => {
     const User = mongoose.model('User');
